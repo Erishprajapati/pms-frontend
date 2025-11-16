@@ -1,77 +1,77 @@
 import { useState } from "react";
 
 export default function LoginForm() {
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
-const [errors, setErrors] = useState(null);
-const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-const handleSubmit = async (e) => {
-e.preventDefault();
-setLoading(true);
-setErrors(null);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrors(null);
 
-try {
-    const res = await fetch(
-    "https://api-deployment-6jj9.onrender.com/api/auth/login/",
-    {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+    try {
+      const res = await fetch(
+        "https://api-deployment-6jj9.onrender.com/api/auth/login/",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErrors(data);
+        setLoading(false);
+        return;
+      }
+
+      localStorage.setItem("access_token", data.access);
+      alert("Login successful");
+      setLoading(false);
+    } catch (err) {
+      console.log("Error:", err);
+      setErrors({ general: "Something went wrong" });
+      setLoading(false);
     }
-    );
+  };
 
-    const data = await res.json();
+  return (
+    <form onSubmit={handleSubmit} className="login-container">
+      <h2>Login</h2>
 
-    if (!res.ok) {
-    // Backend returns: { "email":[...], "password":[...] }
-    setErrors(data);
-    setLoading(false);
-    return;
-    }
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      {errors?.email && <p>{errors.email[0]}</p>}
 
-    // If successful, token will be in data (depends on API)
-    localStorage.setItem("access_token", data.access);
-    alert("Login successful");
-    setLoading(false);
-} catch (err) {
-    console.log("Error:", err);
-    setErrors({ general: "Something went wrong" });
-    setLoading(false);
-}
-};
+      <div className="password-wrapper">
+        <input
+          type={showPassword ? "text" : "password"}
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          {showPassword ? "🙈" : "👁️"}
+        </button>
+      </div>
+      {errors?.password && <p>{errors.password[0]}</p>}
+      {errors?.general && <p>{errors.general}</p>}
 
-return (
-<form onSubmit={handleSubmit} style={{ width: "300px" }}>
-    <h2>Login</h2>
-
-    <input
-    type="email"
-    placeholder="Email"
-    value={email}
-    onChange={(e) => setEmail(e.target.value)}
-    />
-    {errors?.email && <p style={{ color: "red" }}>{errors.email[0]}</p>}
-
-    <br />
-
-    <input
-    type="password"
-    placeholder="Password"
-    value={password}
-    onChange={(e) => setPassword(e.target.value)}
-    />
-    {errors?.password && <p style={{ color: "red" }}>{errors.password[0]}</p>}
-
-    {errors?.general && <p style={{ color: "red" }}>{errors.general}</p>}
-
-    <br />
-
-    <button type="submit" disabled={loading}>
-    {loading ? "Logging in…" : "Login"}
-    </button>
-</form>
-);
+      <button type="submit" className="submit-btn" disabled={loading}>
+        {loading ? "Logging in…" : "Login"}
+      </button>
+    </form>
+  );
 }
