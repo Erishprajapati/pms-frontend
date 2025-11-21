@@ -1,63 +1,59 @@
-/* Split layout page */
-.login-page {
-  display: flex;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-}
-
-/* Left image container */
-.login-page .image-container {
-  width: 80%;
-  background: url('../assets/login-bg.jpg') no-repeat center center;
-  background-size: cover;
-}
-
-/* Right form container */
-.login-page .form-container {
-  width: 20%;
+/* Full-page center layout */
+.signup-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f0f4f8; /* subtle background for contrast */
+  min-height: 100vh;
+  background-color: #f0f4f8;
+  font-family: Arial, sans-serif;
+  color: #333;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-/* Card box around form */
-.login-card {
+/* Card container */
+.signup-card {
   background-color: #ffffff;
   padding: 40px 30px;
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   width: 100%;
-  max-width: 320px;
+  max-width: 400px;
   text-align: center;
 }
 
-/* Form heading */
-.login-card h2 {
+/* Heading */
+.signup-card h2 {
   margin-bottom: 25px;
   color: navy;
   font-size: 28px;
   font-weight: bold;
 }
 
-/* Input fields */
-.login-card input {
+/* Form inputs */
+.signup-card input {
   width: 100%;
   padding: 12px 14px;
   margin-bottom: 16px;
-  border-radius: 8px;
   border: 1px solid #ccc;
+  border-radius: 8px;
   font-size: 16px;
   box-sizing: border-box;
+  color: #000;
+  background-color: #fff;
   transition: border-color 0.2s;
 }
 
-.login-card input:focus {
-  border-color: #4f46e5;
-  outline: none;
+.signup-card input::placeholder {
+  color: #999;
 }
 
-/* Password wrapper for eye icon */
+.signup-card input:focus {
+  outline: none;
+  border-color: #4f46e5;
+}
+
+/* Password wrapper (for eye icon) */
 .password-wrapper {
   position: relative;
   width: 100%;
@@ -65,7 +61,7 @@
 }
 
 .password-wrapper input {
-  padding-right: 44px; /* Make space for the eye icon */
+  padding-right: 44px;
 }
 
 .password-wrapper button {
@@ -82,7 +78,7 @@
   width: 24px;
   height: 24px;
   padding: 0;
-  color: #7b8794; /* subtle gray */
+  color: #7b8794;
   transition: color 0.2s ease;
 }
 
@@ -90,27 +86,27 @@
   color: #4f46e5;
 }
 
-/* Login button */
-.login-card button.submit-btn {
+/* Submit button */
+.signup-card .submit-btn {
   width: 100%;
   padding: 12px 0;
   background: linear-gradient(90deg, #4f46e5, #6366f1);
   color: white;
   font-weight: bold;
+  font-size: 18px;
   border: none;
   border-radius: 10px;
-  font-size: 18px;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.login-card button.submit-btn:hover:not(:disabled) {
+.signup-card .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
   background: linear-gradient(90deg, #6366f1, #4f46e5);
 }
 
-.login-card button.submit-btn:disabled {
+.signup-card .submit-btn:disabled {
   opacity: 0.7;
   cursor: not-allowed;
   transform: none;
@@ -118,49 +114,43 @@
 }
 
 /* Error messages */
-.login-card p {
+.signup-card p {
   color: #e02d2d;
   font-size: 14px;
   margin: 0 0 12px 0;
   text-align: left;
 }
 
-/* Responsive fallback for small screens */
-@media (max-width: 768px) {
-  .login-page {
-    flex-direction: column;
-  }
-
-  .login-page .image-container,
-  .login-page .form-container {
-    width: 100%;
-  }
-
-  .login-page .form-container {
-    padding: 40px 20px;
-  }
-
-  .login-card {
-    max-width: 100%;
-    padding: 30px 20px;
-  }
-}
-/* this was added for signup page
-/* Add this to your LoginPage.css */
-.login-card .signup-link {
+/* Signup link */
+.signup-card .signup-link {
   margin-top: 20px;
   font-size: 14px;
   color: #555;
 }
 
-.login-card .signup-link a {
+.signup-card .signup-link a {
   color: #4f46e5;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.2s;
 }
 
-.login-card .signup-link a:hover {
+.signup-card .signup-link a:hover {
   color: #6366f1;
   text-decoration: underline;
+}
+
+/* Chrome autofill fix */
+.signup-card input:-webkit-autofill,
+.signup-card input:-webkit-autofill:hover,
+.signup-card input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #000 !important;
+  -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .signup-card {
+    padding: 30px 20px;
+  }
 }
